@@ -1,5 +1,6 @@
 #pragma once
 #include "Good.h"
+#include <queue>
 
 namespace CppCLRWinformsProjekt {
 
@@ -45,6 +46,17 @@ namespace CppCLRWinformsProjekt {
 
 
 
+
+
+
+
+
+
+	
+
+
+
+
 	protected:
 
 
@@ -62,6 +74,8 @@ namespace CppCLRWinformsProjekt {
 		/// Erforderliche Methode fьr die Designerunterstьtzung.
 		/// Der Inhalt der Methode darf nicht mit dem Code-Editor geдndert werden.
 		/// </summary>
+	
+
 		void InitializeComponent(void)
 		{
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
@@ -80,27 +94,33 @@ namespace CppCLRWinformsProjekt {
 				this->Id, this->GoodName,
 					this->GivenDate, this->GivenPrice, this->ActualPrice
 			});
-			this->dataGridView1->Location = System::Drawing::Point(13, 13);
+			this->dataGridView1->Location = System::Drawing::Point(12, 12);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(540, 150);
+			this->dataGridView1->Size = System::Drawing::Size(598, 150);
 			this->dataGridView1->TabIndex = 0;
 			// 
 			// Id
 			// 
+			this->Id->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
 			this->Id->HeaderText = L"ID";
 			this->Id->Name = L"Id";
 			this->Id->ReadOnly = true;
+			this->Id->Width = 43;
 			// 
 			// GoodName
 			// 
+			this->GoodName->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
 			this->GoodName->HeaderText = L"Name";
 			this->GoodName->Name = L"GoodName";
+			this->GoodName->Width = 60;
 			// 
 			// GivenDate
 			// 
+			this->GivenDate->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
 			this->GivenDate->HeaderText = L"Given Date";
 			this->GivenDate->Name = L"GivenDate";
 			this->GivenDate->ReadOnly = true;
+			this->GivenDate->Width = 86;
 			// 
 			// GivenPrice
 			// 
@@ -118,7 +138,7 @@ namespace CppCLRWinformsProjekt {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(565, 261);
+			this->ClientSize = System::Drawing::Size(622, 214);
 			this->Controls->Add(this->dataGridView1);
 			this->Name = L"Form1";
 			this->Text = L"Second Hand Shop";
@@ -129,18 +149,34 @@ namespace CppCLRWinformsProjekt {
 		}
 #pragma endregion
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
-		DataGridViewRow^ rowFullName = gcnew DataGridViewRow;
-		DataGridViewCell^ celFullName = gcnew DataGridViewTextBoxCell;
-		rowFullName->Cells->Add(celFullName);
+		
 
-		dataGridView1->Rows->Add(rowFullName);
+		Good^ good = gcnew Good();
+		
+		good->Id = 1;
+		good->GoodName = "Холодильник";
+		good->ActualPrice = 500;
+		good->GivenPrice = 550;
+		good->GivenDate = DateTime::Now;
+		
+	System:Queue^ goods = gcnew Queue();
+		goods->Enqueue(good);
+		int i = 0;
+		while (goods->Count) // 0 принимается за false
+		{
+			Good^ g = safe_cast<Good^>(goods->Dequeue());
 
-		Good good;
-		good.Id = 1;
-		good.GoodName = "Холодильник";
-
-		dataGridView1->Rows[0]->Cells[0]->Value = good.Id;
-		dataGridView1->Rows[0]->Cells[1]->Value = good.GoodName;
+			DataGridViewRow^ rowFullName = gcnew DataGridViewRow;
+			DataGridViewCell^ celFullName = gcnew DataGridViewTextBoxCell;
+			rowFullName->Cells->Add(celFullName);
+			dataGridView1->Rows->Add(rowFullName);
+			dataGridView1->Rows[i]->Cells[0]->Value = g->Id;
+			dataGridView1->Rows[i]->Cells[1]->Value = g->GoodName;
+			dataGridView1->Rows[i]->Cells[2]->Value = g->GivenDate;
+			dataGridView1->Rows[i]->Cells[3]->Value = g->GivenPrice;
+			dataGridView1->Rows[i]->Cells[4]->Value = g->ActualPrice;
+			i++;
+		}
 	}
 	};
 }
