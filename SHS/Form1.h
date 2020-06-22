@@ -1,4 +1,5 @@
 #pragma once
+#include "Good.h"
 
 namespace CppCLRWinformsProjekt {
 
@@ -34,6 +35,21 @@ namespace CppCLRWinformsProjekt {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Id;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GoodName;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GivenDate;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GivenPrice;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ActualPrice;
+
+
+
+
+	protected:
+
+
+
+
 
 	private:
 		/// <summary>
@@ -48,18 +64,83 @@ namespace CppCLRWinformsProjekt {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->GoodName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->GivenDate = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->GivenPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ActualPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
+			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+				this->Id, this->GoodName,
+					this->GivenDate, this->GivenPrice, this->ActualPrice
+			});
+			this->dataGridView1->Location = System::Drawing::Point(13, 13);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(540, 150);
+			this->dataGridView1->TabIndex = 0;
+			// 
+			// Id
+			// 
+			this->Id->HeaderText = L"ID";
+			this->Id->Name = L"Id";
+			this->Id->ReadOnly = true;
+			// 
+			// GoodName
+			// 
+			this->GoodName->HeaderText = L"Name";
+			this->GoodName->Name = L"GoodName";
+			// 
+			// GivenDate
+			// 
+			this->GivenDate->HeaderText = L"Given Date";
+			this->GivenDate->Name = L"GivenDate";
+			this->GivenDate->ReadOnly = true;
+			// 
+			// GivenPrice
+			// 
+			this->GivenPrice->HeaderText = L"Given Price";
+			this->GivenPrice->Name = L"GivenPrice";
+			this->GivenPrice->ReadOnly = true;
+			// 
+			// ActualPrice
+			// 
+			this->ActualPrice->HeaderText = L"Actual Price";
+			this->ActualPrice->Name = L"ActualPrice";
+			this->ActualPrice->ReadOnly = true;
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(284, 261);
+			this->ClientSize = System::Drawing::Size(565, 261);
+			this->Controls->Add(this->dataGridView1);
 			this->Name = L"Form1";
 			this->Text = L"Second Hand Shop";
+			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
+		DataGridViewRow^ rowFullName = gcnew DataGridViewRow;
+		DataGridViewCell^ celFullName = gcnew DataGridViewTextBoxCell;
+		rowFullName->Cells->Add(celFullName);
+
+		dataGridView1->Rows->Add(rowFullName);
+
+		Good good;
+		good.Id = 1;
+		good.GoodName = "Холодильник";
+
+		dataGridView1->Rows[0]->Cells[0]->Value = good.Id;
+		dataGridView1->Rows[0]->Cells[1]->Value = good.GoodName;
+	}
 	};
 }
