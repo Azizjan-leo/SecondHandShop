@@ -250,7 +250,8 @@ namespace CppCLRWinformsProjekt {
 		   int b = 1;
 	private: System::Void addNewEntryBtn_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
-		AddEntry(b++, goods, InputNameTxt->Text, 100);
+
+		AddEntry(b++, goods, InputNameTxt->Text, Convert::ToDouble(InputPriceTxt->Text));
 		Form1_Load(sender,e);
 	}
 };

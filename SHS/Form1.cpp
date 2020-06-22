@@ -2,8 +2,11 @@
 #include "Form1.h"
 #include <string>
 #include <queue>
+#include <msclr\marshal_cppstd.h>
 
 using namespace System;
+using namespace msclr::interop;
+
 namespace CppCLRWinformsProjekt {
 
 
