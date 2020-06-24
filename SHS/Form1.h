@@ -48,26 +48,9 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::TextBox^ InputPriceTxt;
 	private: System::Windows::Forms::TextBox^ InputNameTxt;
 	private: System::Windows::Forms::Button^ addNewEntryBtn;
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
+	private: System::Windows::Forms::Button^ DeleteBtn;
+	private: Queue^ Goods = gcnew Queue();
 	protected:
-
-
-
-
 
 	private:
 		/// <summary>
@@ -85,7 +68,6 @@ namespace CppCLRWinformsProjekt {
 
 		void InitializeComponent(void)
 		{
-			goods = gcnew Queue();
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->GoodName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -93,11 +75,12 @@ namespace CppCLRWinformsProjekt {
 			this->GivenPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ActualPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->addNewEntryBtn = (gcnew System::Windows::Forms::Button());
-			this->InputNameTxt = (gcnew System::Windows::Forms::TextBox());
-			this->InputPriceTxt = (gcnew System::Windows::Forms::TextBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->InputPriceTxt = (gcnew System::Windows::Forms::TextBox());
+			this->InputNameTxt = (gcnew System::Windows::Forms::TextBox());
+			this->addNewEntryBtn = (gcnew System::Windows::Forms::Button());
+			this->DeleteBtn = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
@@ -109,9 +92,9 @@ namespace CppCLRWinformsProjekt {
 				this->Id, this->GoodName,
 					this->GivenDate, this->GivenPrice, this->ActualPrice
 			});
-			this->dataGridView1->Location = System::Drawing::Point(12, 175);
+			this->dataGridView1->Location = System::Drawing::Point(12, 12);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(598, 150);
+			this->dataGridView1->Size = System::Drawing::Size(598, 168);
 			this->dataGridView1->TabIndex = 0;
 			// 
 			// Id
@@ -156,10 +139,42 @@ namespace CppCLRWinformsProjekt {
 			this->panel1->Controls->Add(this->InputPriceTxt);
 			this->panel1->Controls->Add(this->InputNameTxt);
 			this->panel1->Controls->Add(this->addNewEntryBtn);
-			this->panel1->Location = System::Drawing::Point(13, 13);
+			this->panel1->Location = System::Drawing::Point(12, 186);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(337, 156);
+			this->panel1->Size = System::Drawing::Size(205, 92);
 			this->panel1->TabIndex = 1;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(24, 36);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(61, 13);
+			this->label2->TabIndex = 4;
+			this->label2->Text = L"Given price";
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(50, 10);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(35, 13);
+			this->label1->TabIndex = 3;
+			this->label1->Text = L"Name";
+			// 
+			// InputPriceTxt
+			// 
+			this->InputPriceTxt->Location = System::Drawing::Point(91, 29);
+			this->InputPriceTxt->Name = L"InputPriceTxt";
+			this->InputPriceTxt->Size = System::Drawing::Size(100, 20);
+			this->InputPriceTxt->TabIndex = 2;
+			// 
+			// InputNameTxt
+			// 
+			this->InputNameTxt->Location = System::Drawing::Point(91, 3);
+			this->InputNameTxt->Name = L"InputNameTxt";
+			this->InputNameTxt->Size = System::Drawing::Size(100, 20);
+			this->InputNameTxt->TabIndex = 1;
 			// 
 			// addNewEntryBtn
 			// 
@@ -171,43 +186,22 @@ namespace CppCLRWinformsProjekt {
 			this->addNewEntryBtn->UseVisualStyleBackColor = true;
 			this->addNewEntryBtn->Click += gcnew System::EventHandler(this, &Form1::addNewEntryBtn_Click);
 			// 
-			// InputNameTxt
+			// DeleteBtn
 			// 
-			this->InputNameTxt->Location = System::Drawing::Point(91, 3);
-			this->InputNameTxt->Name = L"InputNameTxt";
-			this->InputNameTxt->Size = System::Drawing::Size(100, 20);
-			this->InputNameTxt->TabIndex = 1;
-			// 
-			// InputPriceTxt
-			// 
-			this->InputPriceTxt->Location = System::Drawing::Point(91, 29);
-			this->InputPriceTxt->Name = L"InputPriceTxt";
-			this->InputPriceTxt->Size = System::Drawing::Size(100, 20);
-			this->InputPriceTxt->TabIndex = 2;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(50, 10);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(35, 13);
-			this->label1->TabIndex = 3;
-			this->label1->Text = L"Name";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(24, 36);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(61, 13);
-			this->label2->TabIndex = 4;
-			this->label2->Text = L"Given price";
+			this->DeleteBtn->Location = System::Drawing::Point(535, 186);
+			this->DeleteBtn->Name = L"DeleteBtn";
+			this->DeleteBtn->Size = System::Drawing::Size(75, 23);
+			this->DeleteBtn->TabIndex = 2;
+			this->DeleteBtn->Text = L"Delete";
+			this->DeleteBtn->UseVisualStyleBackColor = true;
+			this->DeleteBtn->Click += gcnew System::EventHandler(this, &Form1::btnDelete_Click);
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(622, 337);
+			this->ClientSize = System::Drawing::Size(622, 287);
+			this->Controls->Add(this->DeleteBtn);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->dataGridView1);
 			this->Name = L"Form1";
@@ -220,17 +214,15 @@ namespace CppCLRWinformsProjekt {
 
 		}
 #pragma endregion
-		private: Queue^ LoadList(Queue^ goods);
-		private: void AddEntry(int id, Queue^ goods, String^ name, double givenPrice);
-		private: Queue^ goods;
-	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
+		private: void AddEntry(int id, String^ name, double givenPrice);
+		private: void RemoveEntry(int id);
+		
+	private: Void Form1_Load(Object^ sender, EventArgs^ e) {
 		
 		int i = 0;
-		int count = goods->Count;
-		//dataGridView1->DataSource = NULL;
 		dataGridView1->Rows->Clear();
 
-		for each (Good^ good in goods)
+		for each (Good^ good in Goods)
 		{
 			Good^ g = safe_cast<Good^>(good);
 
@@ -247,12 +239,21 @@ namespace CppCLRWinformsProjekt {
 		}
 	}
 
-		   int b = 1;
-	private: System::Void addNewEntryBtn_Click(System::Object^ sender, System::EventArgs^ e) 
+		   int index = 1;
+	private: Void addNewEntryBtn_Click(Object^ sender, EventArgs^ e) 
 	{
-
-		AddEntry(b++, goods, InputNameTxt->Text, Convert::ToDouble(InputPriceTxt->Text));
+		AddEntry(index++, InputNameTxt->Text, Convert::ToDouble(InputPriceTxt->Text));
 		Form1_Load(sender,e);
+	}
+
+	private: Void btnDelete_Click(Object^ sender, EventArgs^ e)
+	{
+		for each (DataGridViewRow^ item  in dataGridView1->SelectedRows)
+		{
+			int id = Convert::ToInt32(item->Cells[0]->Value);
+			RemoveEntry(id);
+			dataGridView1->Rows->RemoveAt(item->Index);
+		}
 	}
 };
 }

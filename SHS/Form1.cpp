@@ -9,21 +9,7 @@ using namespace msclr::interop;
 
 namespace CppCLRWinformsProjekt {
 
-
-	Queue^ CppCLRWinformsProjekt::Form1::LoadList(Queue^ goods)
-	{
-		Good^ good = gcnew Good();
-
-		good->Id = 1;
-		good->GoodName = "Холодильник";
-		good->ActualPrice = 500;
-		good->GivenPrice = 550;
-		good->GivenDate = DateTime::Now;
-
-		goods->Enqueue(good);
-		return goods;
-	}
-	void Form1::AddEntry(int id, Queue^ goods, String^ name, double givenPrice)
+	void Form1::AddEntry(int id, String^ name, double givenPrice)
 	{
 		Good^ good = gcnew Good();
 
@@ -33,20 +19,23 @@ namespace CppCLRWinformsProjekt {
 		good->GivenPrice = givenPrice;
 		good->GivenDate = DateTime::Now;
 
-		goods->Enqueue(good);
+		Goods->Enqueue(good);
 	}
-	/*int CppCLRWinformsProjekt::Form1::AddEntry(Queue^ goods, String^ name, double givenPrice)
+
+	void Form1::RemoveEntry(int id)
 	{
-		Good^ good = gcnew Good();
+		Queue^ tmp = gcnew Queue();
 
-		good->Id = 2;
-		good->GoodName = name;
-		good->ActualPrice = givenPrice-50;
-		good->GivenPrice = givenPrice;
-		good->GivenDate = DateTime::Now;
+		for each (Good ^ good in Goods)
+		{
+			Good^ g = safe_cast<Good^>(good);
+			if (g->Id != id) 
+			{
+				tmp->Enqueue(g);
+				break;
+			}
+		}
 
-		Queue^ goods = gcnew Queue();
-		goods->Enqueue(good);
-		return 1;
-	}*/
+		Goods = tmp;	
+	}
 }
