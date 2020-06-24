@@ -206,6 +206,7 @@ namespace CppCLRWinformsProjekt {
 			this->Controls->Add(this->dataGridView1);
 			this->Name = L"Form1";
 			this->Text = L"Second Hand Shop";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Form1::Form1_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->panel1->ResumeLayout(false);
@@ -216,9 +217,11 @@ namespace CppCLRWinformsProjekt {
 #pragma endregion
 		private: void AddEntry(int id, String^ name, double givenPrice);
 		private: void RemoveEntry(int id);
-		
+		private: void WriteData();
+		private: void ReadData();
+
 	private: Void Form1_Load(Object^ sender, EventArgs^ e) {
-		
+		ReadData();
 		int i = 0;
 		dataGridView1->Rows->Clear();
 
@@ -255,5 +258,8 @@ namespace CppCLRWinformsProjekt {
 			dataGridView1->Rows->RemoveAt(item->Index);
 		}
 	}
+private: System::Void Form1_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+	WriteData();
+}
 };
 }
