@@ -37,11 +37,11 @@ namespace CppCLRWinformsProjekt {
 			}
 		}
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Id;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GoodName;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GivenDate;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GivenPrice;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ActualPrice;
+
+
+
+
+
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
@@ -51,6 +51,11 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::Button^ DeleteBtn;
 	private: Queue^ Goods = gcnew Queue();
 	private: int index = 0;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Id;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GoodName;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GivenDate;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GivenPrice;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ActualPrice;
 
 	protected:
 
@@ -71,11 +76,6 @@ namespace CppCLRWinformsProjekt {
 		void InitializeComponent(void)
 		{
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->GoodName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->GivenDate = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->GivenPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->ActualPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -83,6 +83,11 @@ namespace CppCLRWinformsProjekt {
 			this->InputNameTxt = (gcnew System::Windows::Forms::TextBox());
 			this->addNewEntryBtn = (gcnew System::Windows::Forms::Button());
 			this->DeleteBtn = (gcnew System::Windows::Forms::Button());
+			this->Id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->GoodName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->GivenDate = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->GivenPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ActualPrice = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
@@ -99,41 +104,6 @@ namespace CppCLRWinformsProjekt {
 			this->dataGridView1->Size = System::Drawing::Size(598, 168);
 			this->dataGridView1->TabIndex = 0;
 			this->dataGridView1->CellEndEdit += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &Form1::dataGridView1_CellEndEdit);
-			// 
-			// Id
-			// 
-			this->Id->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
-			this->Id->HeaderText = L"ID";
-			this->Id->Name = L"Id";
-			this->Id->ReadOnly = true;
-			this->Id->Width = 43;
-			// 
-			// GoodName
-			// 
-			this->GoodName->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
-			this->GoodName->HeaderText = L"Name";
-			this->GoodName->Name = L"GoodName";
-			this->GoodName->Width = 60;
-			// 
-			// GivenDate
-			// 
-			this->GivenDate->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
-			this->GivenDate->HeaderText = L"Given Date";
-			this->GivenDate->Name = L"GivenDate";
-			this->GivenDate->ReadOnly = true;
-			this->GivenDate->Width = 86;
-			// 
-			// GivenPrice
-			// 
-			this->GivenPrice->HeaderText = L"Given Price";
-			this->GivenPrice->Name = L"GivenPrice";
-			this->GivenPrice->ReadOnly = true;
-			// 
-			// ActualPrice
-			// 
-			this->ActualPrice->HeaderText = L"Actual Price";
-			this->ActualPrice->Name = L"ActualPrice";
-			this->ActualPrice->ReadOnly = true;
 			// 
 			// panel1
 			// 
@@ -198,6 +168,39 @@ namespace CppCLRWinformsProjekt {
 			this->DeleteBtn->Text = L"Delete";
 			this->DeleteBtn->UseVisualStyleBackColor = true;
 			this->DeleteBtn->Click += gcnew System::EventHandler(this, &Form1::btnDelete_Click);
+			// 
+			// Id
+			// 
+			this->Id->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
+			this->Id->HeaderText = L"ID";
+			this->Id->Name = L"Id";
+			this->Id->ReadOnly = true;
+			this->Id->Width = 43;
+			// 
+			// GoodName
+			// 
+			this->GoodName->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
+			this->GoodName->HeaderText = L"Name";
+			this->GoodName->Name = L"GoodName";
+			this->GoodName->Width = 60;
+			// 
+			// GivenDate
+			// 
+			this->GivenDate->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
+			this->GivenDate->HeaderText = L"Given Date";
+			this->GivenDate->Name = L"GivenDate";
+			this->GivenDate->Width = 86;
+			// 
+			// GivenPrice
+			// 
+			this->GivenPrice->HeaderText = L"Given Price";
+			this->GivenPrice->Name = L"GivenPrice";
+			// 
+			// ActualPrice
+			// 
+			this->ActualPrice->HeaderText = L"Actual Price";
+			this->ActualPrice->Name = L"ActualPrice";
+			this->ActualPrice->ReadOnly = true;
 			// 
 			// Form1
 			// 
