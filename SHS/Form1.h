@@ -1,6 +1,6 @@
 #pragma once
 #include "Good.h"
-#include <queue>
+#include <queue> // библиотека, хранящая необходимую структуру (очередь)
 
 namespace CppCLRWinformsProjekt {
 
@@ -38,10 +38,6 @@ namespace CppCLRWinformsProjekt {
 		}
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
 
-
-
-
-
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
@@ -49,8 +45,8 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::TextBox^ InputNameTxt;
 	private: System::Windows::Forms::Button^ addNewEntryBtn;
 	private: System::Windows::Forms::Button^ DeleteBtn;
-	private: Queue^ Goods = gcnew Queue();
-	private: int index = 0;
+	private: Queue^ Goods = gcnew Queue(); // Очередь, в которой будут наши товары
+	private: int index = 0; // Максимальный индекс. Дабы обеспечить правильный прирост id элементов
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Id;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GoodName;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GivenDate;
@@ -221,46 +217,64 @@ namespace CppCLRWinformsProjekt {
 
 		}
 #pragma endregion
-		private: void LoadTable();
-		private: void AddEntry(String^ name, double givenPrice);
-		private: void UpdateEntry(Good^ good);
-		private: void RemoveEntry(int id);
-		private: void WriteData();
-		private: void ReadData();
-
+		// Объявление функций
+		private: void LoadTable(); // Загрузка ui-таблицы из очереди 
+		private: void AddEntry(String^ name, double givenPrice); // Добавление нового товара
+		private: void UpdateEntry(Good^ good); // Обновление товара
+		private: void RemoveEntry(int id); // Удаление товара по Id
+		private: void WriteData(); // Запись данных в файл
+		private: void ReadData(); // Загрузка данных с файла
+	/// <summary>
+	/// Старт формы
+	/// </summary>
 	private: Void Form1_Load(Object^ sender, EventArgs^ e) {
-		ReadData();
-		LoadTable();
+		ReadData(); // загружае данные из файла в очередь
+		LoadTable(); // обновляем таблицу на формее в соответствии с данными в очереди
 	}
-
+	/// <summary>
+	/// Обработчик нажатия кнопки создания нового элемента
+	/// </summary>
 	private: Void addNewEntryBtn_Click(Object^ sender, EventArgs^ e) 
 	{
+		// Передаем функции добавления записи Название нового товара и его стартовую цену
 		AddEntry(InputNameTxt->Text, Convert::ToDouble(InputPriceTxt->Text));
+		// обновляем таблицу на формее в соответствии с данными в очереди
 		LoadTable();
 	}
 
+	/// <summary>
+	/// Обработчик кнопки удаления элементов
+	/// </summary>
 	private: Void btnDelete_Click(Object^ sender, EventArgs^ e)
 	{
-		for each (DataGridViewRow^ item  in dataGridView1->SelectedRows)
+		for each (DataGridViewRow^ item  in dataGridView1->SelectedRows) // проходим по каждому выделенному элементу таблицы на форме
 		{
-			int id = Convert::ToInt32(item->Cells[0]->Value);
-			RemoveEntry(id);
-			dataGridView1->Rows->RemoveAt(item->Index);
+			int id = Convert::ToInt32(item->Cells[0]->Value); // вытаскиваем id, который находится в первой ячейке
+			RemoveEntry(id); // вызываем функцию удаления товара, передав ей id удаляемого элемента
+			dataGridView1->Rows->RemoveAt(item->Index); // удаляем выбранную строку из таблицы
 		}
 	}
-private: System::Void Form1_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
-	WriteData();
-}
-private: System::Void dataGridView1_CellEndEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-	DataGridViewRow^ row = dataGridView1->Rows[e->RowIndex];
+	/// <summary>
+	/// Обработчик закрытия формы
+	/// </summary>
+	private: System::Void Form1_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+		WriteData(); // вызываем функцию записи очереди в файл
+	}
+
+	/// <summary>
+	/// Обработчик окончания редактирования ячейки в таблице на форме
+	/// </summary>
+	private: System::Void dataGridView1_CellEndEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		
+		DataGridViewRow^ row = dataGridView1->Rows[e->RowIndex]; // вытягиваем строку, которая редактировалась
 	
-	Good^ good = gcnew Good();
-	good->Id = Convert::ToInt32(row->Cells[0]->Value);
-	good->GoodName = row->Cells[1]->Value->ToString();
-	good->GivenDate = Convert::ToDateTime(row->Cells[2]->Value);
-	good->GivenPrice = Convert::ToDouble(row->Cells[3]->Value);
+		Good^ good = gcnew Good(); // создаем новый объект товара, в который записываем обновленные данные и id отредактированного товара
+		good->Id = Convert::ToInt32(row->Cells[0]->Value); 
+		good->GoodName = row->Cells[1]->Value->ToString();
+		good->GivenDate = Convert::ToDateTime(row->Cells[2]->Value);
+		good->GivenPrice = Convert::ToDouble(row->Cells[3]->Value);
 	
-	UpdateEntry(good);
-}
+		UpdateEntry(good); // вызываем функцию обновления записи
+	}
 };
 }
