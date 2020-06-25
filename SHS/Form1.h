@@ -1,6 +1,6 @@
 #pragma once
 #include "Good.h"
-#include <queue> // библиотека, хранящая необходимую структуру (очередь)
+#include <queue> // Р±РёР±Р»РёРѕС‚РµРєР°, С…СЂР°РЅСЏС‰Р°СЏ РЅРµРѕР±С…РѕРґРёРјСѓСЋ СЃС‚СЂСѓРєС‚СѓСЂСѓ (РѕС‡РµСЂРµРґСЊ)
 
 namespace CppCLRWinformsProjekt {
 
@@ -12,7 +12,7 @@ namespace CppCLRWinformsProjekt {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Zusammenfassung fьr Form1
+	/// Zusammenfassung fСЊr Form1
 	/// </summary>
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
@@ -21,7 +21,7 @@ namespace CppCLRWinformsProjekt {
 		{
 			InitializeComponent();
 			//
-			//TODO: Konstruktorcode hier hinzufьgen.
+			//TODO: Konstruktorcode hier hinzufСЊgen.
 			//
 		}
 
@@ -45,8 +45,8 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::TextBox^ InputNameTxt;
 	private: System::Windows::Forms::Button^ addNewEntryBtn;
 	private: System::Windows::Forms::Button^ DeleteBtn;
-	private: Queue^ Goods = gcnew Queue(); // Очередь, в которой будут наши товары
-	private: int index = 0; // Максимальный индекс. Дабы обеспечить правильный прирост id элементов
+	private: Queue^ Goods = gcnew Queue(); // РћС‡РµСЂРµРґСЊ, РІ РєРѕС‚РѕСЂРѕР№ Р±СѓРґСѓС‚ РЅР°С€Рё С‚РѕРІР°СЂС‹
+	private: int index = 0; // РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ РёРЅРґРµРєСЃ. Р”Р°Р±С‹ РѕР±РµСЃРїРµС‡РёС‚СЊ РїСЂР°РІРёР»СЊРЅС‹Р№ РїСЂРёСЂРѕСЃС‚ id СЌР»РµРјРµРЅС‚РѕРІ
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Id;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GoodName;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ GivenDate;
@@ -63,8 +63,8 @@ namespace CppCLRWinformsProjekt {
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Erforderliche Methode fьr die Designerunterstьtzung.
-		/// Der Inhalt der Methode darf nicht mit dem Code-Editor geдndert werden.
+		/// Erforderliche Methode fСЊr die DesignerunterstСЊtzung.
+		/// Der Inhalt der Methode darf nicht mit dem Code-Editor geРґndert werden.
 		/// </summary>
 		
 	
@@ -217,64 +217,64 @@ namespace CppCLRWinformsProjekt {
 
 		}
 #pragma endregion
-		// Объявление функций
-		private: void LoadTable(); // Загрузка ui-таблицы из очереди 
-		private: void AddEntry(String^ name, double givenPrice); // Добавление нового товара
-		private: void UpdateEntry(Good^ good); // Обновление товара
-		private: void RemoveEntry(int id); // Удаление товара по Id
-		private: void WriteData(); // Запись данных в файл
-		private: void ReadData(); // Загрузка данных с файла
+		// РћР±СЉСЏРІР»РµРЅРёРµ С„СѓРЅРєС†РёР№
+		private: void LoadTable(); // Р—Р°РіСЂСѓР·РєР° ui-С‚Р°Р±Р»РёС†С‹ РёР· РѕС‡РµСЂРµРґРё 
+		private: void AddEntry(String^ name, double givenPrice); // Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ С‚РѕРІР°СЂР°
+		private: void UpdateEntry(Good^ good); // РћР±РЅРѕРІР»РµРЅРёРµ С‚РѕРІР°СЂР°
+		private: void RemoveEntry(int id); // РЈРґР°Р»РµРЅРёРµ С‚РѕРІР°СЂР° РїРѕ Id
+		private: void WriteData(); // Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РІ С„Р°Р№Р»
+		private: void ReadData(); // Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… СЃ С„Р°Р№Р»Р°
 	/// <summary>
-	/// Старт формы
+	/// РЎС‚Р°СЂС‚ С„РѕСЂРјС‹
 	/// </summary>
 	private: Void Form1_Load(Object^ sender, EventArgs^ e) {
-		ReadData(); // загружае данные из файла в очередь
-		LoadTable(); // обновляем таблицу на формее в соответствии с данными в очереди
+		ReadData(); // Р·Р°РіСЂСѓР¶Р°Рµ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р° РІ РѕС‡РµСЂРµРґСЊ
+		LoadTable(); // РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ РЅР° С„РѕСЂРјРµРµ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ РґР°РЅРЅС‹РјРё РІ РѕС‡РµСЂРµРґРё
 	}
 	/// <summary>
-	/// Обработчик нажатия кнопки создания нового элемента
+	/// РћР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёСЏ РєРЅРѕРїРєРё СЃРѕР·РґР°РЅРёСЏ РЅРѕРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 	/// </summary>
 	private: Void addNewEntryBtn_Click(Object^ sender, EventArgs^ e) 
 	{
-		// Передаем функции добавления записи Название нового товара и его стартовую цену
+		// РџРµСЂРµРґР°РµРј С„СѓРЅРєС†РёРё РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё РќР°Р·РІР°РЅРёРµ РЅРѕРІРѕРіРѕ С‚РѕРІР°СЂР° Рё РµРіРѕ СЃС‚Р°СЂС‚РѕРІСѓСЋ С†РµРЅСѓ
 		AddEntry(InputNameTxt->Text, Convert::ToDouble(InputPriceTxt->Text));
-		// обновляем таблицу на формее в соответствии с данными в очереди
+		// РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ РЅР° С„РѕСЂРјРµРµ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ РґР°РЅРЅС‹РјРё РІ РѕС‡РµСЂРµРґРё
 		LoadTable();
 	}
 
 	/// <summary>
-	/// Обработчик кнопки удаления элементов
+	/// РћР±СЂР°Р±РѕС‚С‡РёРє РєРЅРѕРїРєРё СѓРґР°Р»РµРЅРёСЏ СЌР»РµРјРµРЅС‚РѕРІ
 	/// </summary>
 	private: Void btnDelete_Click(Object^ sender, EventArgs^ e)
 	{
-		for each (DataGridViewRow^ item  in dataGridView1->SelectedRows) // проходим по каждому выделенному элементу таблицы на форме
+		for each (DataGridViewRow^ item  in dataGridView1->SelectedRows) // РїСЂРѕС…РѕРґРёРј РїРѕ РєР°Р¶РґРѕРјСѓ РІС‹РґРµР»РµРЅРЅРѕРјСѓ СЌР»РµРјРµРЅС‚Сѓ С‚Р°Р±Р»РёС†С‹ РЅР° С„РѕСЂРјРµ
 		{
-			int id = Convert::ToInt32(item->Cells[0]->Value); // вытаскиваем id, который находится в первой ячейке
-			RemoveEntry(id); // вызываем функцию удаления товара, передав ей id удаляемого элемента
-			dataGridView1->Rows->RemoveAt(item->Index); // удаляем выбранную строку из таблицы
+			int id = Convert::ToInt32(item->Cells[0]->Value); // РІС‹С‚Р°СЃРєРёРІР°РµРј id, РєРѕС‚РѕСЂС‹Р№ РЅР°С…РѕРґРёС‚СЃСЏ РІ РїРµСЂРІРѕР№ СЏС‡РµР№РєРµ
+			RemoveEntry(id); // РІС‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ СѓРґР°Р»РµРЅРёСЏ С‚РѕРІР°СЂР°, РїРµСЂРµРґР°РІ РµР№ id СѓРґР°Р»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+			dataGridView1->Rows->RemoveAt(item->Index); // СѓРґР°Р»СЏРµРј РІС‹Р±СЂР°РЅРЅСѓСЋ СЃС‚СЂРѕРєСѓ РёР· С‚Р°Р±Р»РёС†С‹
 		}
 	}
 	/// <summary>
-	/// Обработчик закрытия формы
+	/// РћР±СЂР°Р±РѕС‚С‡РёРє Р·Р°РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹
 	/// </summary>
 	private: System::Void Form1_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
-		WriteData(); // вызываем функцию записи очереди в файл
+		WriteData(); // РІС‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ Р·Р°РїРёСЃРё РѕС‡РµСЂРµРґРё РІ С„Р°Р№Р»
 	}
 
 	/// <summary>
-	/// Обработчик окончания редактирования ячейки в таблице на форме
+	/// РћР±СЂР°Р±РѕС‚С‡РёРє РѕРєРѕРЅС‡Р°РЅРёСЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ СЏС‡РµР№РєРё РІ С‚Р°Р±Р»РёС†Рµ РЅР° С„РѕСЂРјРµ
 	/// </summary>
 	private: System::Void dataGridView1_CellEndEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 		
-		DataGridViewRow^ row = dataGridView1->Rows[e->RowIndex]; // вытягиваем строку, которая редактировалась
+		DataGridViewRow^ row = dataGridView1->Rows[e->RowIndex]; // РІС‹С‚СЏРіРёРІР°РµРј СЃС‚СЂРѕРєСѓ, РєРѕС‚РѕСЂР°СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°Р»Р°СЃСЊ
 	
-		Good^ good = gcnew Good(); // создаем новый объект товара, в который записываем обновленные данные и id отредактированного товара
+		Good^ good = gcnew Good(); // СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ С‚РѕРІР°СЂР°, РІ РєРѕС‚РѕСЂС‹Р№ Р·Р°РїРёСЃС‹РІР°РµРј РѕР±РЅРѕРІР»РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ Рё id РѕС‚СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРЅРѕРіРѕ С‚РѕРІР°СЂР°
 		good->Id = Convert::ToInt32(row->Cells[0]->Value); 
 		good->GoodName = row->Cells[1]->Value->ToString();
 		good->GivenDate = Convert::ToDateTime(row->Cells[2]->Value);
 		good->GivenPrice = Convert::ToDouble(row->Cells[3]->Value);
 	
-		UpdateEntry(good); // вызываем функцию обновления записи
+		UpdateEntry(good); // РІС‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
 	}
 };
 }

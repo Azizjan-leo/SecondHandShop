@@ -1,6 +1,6 @@
 #pragma once
 namespace CppCLRWinformsProjekt {
-	public ref class Good // класс товара
+	public ref class Good // РєР»Р°СЃСЃ С‚РѕРІР°СЂР°
 	{
 	public:
 		int Id;
