@@ -50,6 +50,8 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::Button^ addNewEntryBtn;
 	private: System::Windows::Forms::Button^ DeleteBtn;
 	private: Queue^ Goods = gcnew Queue();
+	private: int index = 0;
+
 	protected:
 
 	private:
@@ -96,6 +98,7 @@ namespace CppCLRWinformsProjekt {
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->Size = System::Drawing::Size(598, 168);
 			this->dataGridView1->TabIndex = 0;
+			this->dataGridView1->CellEndEdit += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &Form1::dataGridView1_CellEndEdit);
 			// 
 			// Id
 			// 
@@ -215,38 +218,22 @@ namespace CppCLRWinformsProjekt {
 
 		}
 #pragma endregion
-		private: void AddEntry(int id, String^ name, double givenPrice);
+		private: void LoadTable();
+		private: void AddEntry(String^ name, double givenPrice);
+		private: void UpdateEntry(Good^ good);
 		private: void RemoveEntry(int id);
 		private: void WriteData();
 		private: void ReadData();
 
 	private: Void Form1_Load(Object^ sender, EventArgs^ e) {
 		ReadData();
-		int i = 0;
-		dataGridView1->Rows->Clear();
-
-		for each (Good^ good in Goods)
-		{
-			Good^ g = safe_cast<Good^>(good);
-
-			DataGridViewRow^ rowFullName = gcnew DataGridViewRow;
-			DataGridViewCell^ celFullName = gcnew DataGridViewTextBoxCell;
-			rowFullName->Cells->Add(celFullName);
-			dataGridView1->Rows->Add(rowFullName);
-			dataGridView1->Rows[i]->Cells[0]->Value = g->Id;
-			dataGridView1->Rows[i]->Cells[1]->Value = g->GoodName;
-			dataGridView1->Rows[i]->Cells[2]->Value = g->GivenDate;
-			dataGridView1->Rows[i]->Cells[3]->Value = g->GivenPrice;
-			dataGridView1->Rows[i]->Cells[4]->Value = g->ActualPrice;
-			i++;
-		}
+		LoadTable();
 	}
 
-		   int index = 1;
 	private: Void addNewEntryBtn_Click(Object^ sender, EventArgs^ e) 
 	{
-		AddEntry(index++, InputNameTxt->Text, Convert::ToDouble(InputPriceTxt->Text));
-		Form1_Load(sender,e);
+		AddEntry(InputNameTxt->Text, Convert::ToDouble(InputPriceTxt->Text));
+		LoadTable();
 	}
 
 	private: Void btnDelete_Click(Object^ sender, EventArgs^ e)
@@ -260,6 +247,17 @@ namespace CppCLRWinformsProjekt {
 	}
 private: System::Void Form1_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 	WriteData();
+}
+private: System::Void dataGridView1_CellEndEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+	DataGridViewRow^ row = dataGridView1->Rows[e->RowIndex];
+	
+	Good^ good = gcnew Good();
+	good->Id = Convert::ToInt32(row->Cells[0]->Value);
+	good->GoodName = row->Cells[1]->Value->ToString();
+	good->GivenDate = Convert::ToDateTime(row->Cells[2]->Value);
+	good->GivenPrice = Convert::ToDouble(row->Cells[3]->Value);
+	
+	UpdateEntry(good);
 }
 };
 }

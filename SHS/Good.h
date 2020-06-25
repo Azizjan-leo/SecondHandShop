@@ -6,7 +6,7 @@ namespace CppCLRWinformsProjekt {
 		int Id;
 		System::String^ GoodName ;
 		double GivenPrice;
-		System::DateTime^ GivenDate;
+		System::DateTime GivenDate;
 		double ActualPrice;
 	};
 }

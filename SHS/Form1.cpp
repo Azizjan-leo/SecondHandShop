@@ -4,52 +4,65 @@
 #include <queue>
 #include <msclr\marshal_cppstd.h>
 #include <fstream>
+using namespace System::Runtime::Serialization::Formatters::Binary;
+using namespace System::IO;
 
 using namespace System;
 using namespace msclr::interop;
 
 
 namespace CppCLRWinformsProjekt {
-
-	std::ostream& operator<<(std::ostream& os, Good^ good)
+	void Form1::LoadTable()
 	{
-		using namespace Runtime::InteropServices;
-	
-		const char* chars =
-			(const char*)(Marshal::StringToHGlobalAnsi(good->Id + " " + good->GoodName + " " + good->GivenDate + " " + good->GivenPrice)).ToPointer();
-		std::string theStr = chars;
-		Marshal::FreeHGlobal(IntPtr((void*)chars));
+		int i = 0;
+		dataGridView1->Rows->Clear();
 
-		os << theStr;
-		return os;
+		for each (Good ^ g in Goods)
+		{
+			DataGridViewRow^ rowFullName = gcnew DataGridViewRow;
+			DataGridViewCell^ celFullName = gcnew DataGridViewTextBoxCell;
+			rowFullName->Cells->Add(celFullName);
+			dataGridView1->Rows->Add(rowFullName);
+			dataGridView1->Rows[i]->Cells[0]->Value = g->Id;
+			dataGridView1->Rows[i]->Cells[1]->Value = g->GoodName;
+			dataGridView1->Rows[i]->Cells[2]->Value = g->GivenDate;
+			dataGridView1->Rows[i]->Cells[3]->Value = g->GivenPrice;
+			dataGridView1->Rows[i]->Cells[4]->Value = g->ActualPrice;
+			i++;
+		}
 	}
-	std::istream& operator>>(std::istream& is, Good^ good)
-	{
-		int id;
-		std::string goodName, givenDate;
-		double givenPrice;
-		is >> id >> goodName >> givenDate >> givenPrice;
-		
-		String^ dateStr = gcnew String(givenDate.c_str());
-
-
-		good->Id = id;
-		good->GoodName = gcnew String(goodName.c_str());
-		good->GivenDate = DateTime::Parse(dateStr);
-		good->GivenPrice = givenPrice;
-		return is;
-	}
-	void Form1::AddEntry(int id, String^ name, double givenPrice)
+	void Form1::AddEntry(String^ name, double givenPrice)
 	{
 		Good^ good = gcnew Good();
 
-		good->Id = id;
+		good->Id = ++index;
 		good->GoodName = name;
 		good->ActualPrice = givenPrice - 50;
 		good->GivenPrice = givenPrice;
 		good->GivenDate = DateTime::Now;
 
 		Goods->Enqueue(good);
+	}
+
+	void Form1::UpdateEntry(Good^ good)
+	{
+		Queue^ tmp = gcnew Queue();
+
+		for each (Good ^ item in Goods)
+		{
+			if (item->Id == good->Id) 
+			{
+				item->GoodName = good->GoodName;
+				item->GivenDate = good->GivenDate;
+				item->GivenPrice = good->GivenPrice;
+			}
+			Good^ g = safe_cast<Good^>(item);
+			
+				tmp->Enqueue(g);
+				break;
+		}
+
+		Goods = tmp;
 	}
 
 	void Form1::RemoveEntry(int id)
@@ -70,44 +83,75 @@ namespace CppCLRWinformsProjekt {
 	}
 	void Form1::WriteData()
 	{
-		std::string path = "file.txt";
-		std::fstream fs;
-		fs.open(path, std::fstream::out);
-		if (!fs.is_open())
+		StreamWriter^ pwriter = gcnew StreamWriter("file.txt");
+		int index = 0;
+		for each (Good ^ good in Goods)
 		{
-			return;
+			if (good->Id > index)
+				index = good->Id;
 		}
-		else
+
+		pwriter->WriteLine(index);
+		for each (Good ^ good in Goods)
 		{
-			for each (Good ^ good in Goods)
-			{
-				fs << good << std::endl;
-			}
+			String^ str = good->Id + ";" + good->GoodName + ";" + good->GivenDate + ";" + good->GivenPrice;
+			pwriter->WriteLine(str);
 		}
-		fs.close();
+		pwriter->Close();
 	}
 	void Form1::ReadData()
 	{
-		std::string path = "file.txt";
-		std::fstream fs;
-		fs.open(path, std::fstream::in);
-		if (!fs.is_open())
+		StreamReader^ din = nullptr;
+		try
 		{
-			return;
-		}
-		else
-		{
-			while (true)
+			din = gcnew StreamReader("file.txt");
+
+			index = Int32::Parse(din->ReadLine());
+		
+			int i = 0;
+			while (din->Peek() >= 0) 
 			{
+				String^ line = din->ReadLine();
+				array<String^>^ parts = line->Split(';');
+
+
 				Good^ good = gcnew Good();
-				fs >> good;
-				if (fs.eof())
+
+				good->Id = Int32::Parse(parts[0]);
+				good->GoodName = parts[1];
+				good->GivenDate = DateTime::Parse(parts[2]);
+				good->GivenPrice = Double::Parse(parts[3]);
+				TimeSpan diff = DateTime::Now - good->GivenDate;
+				int days = diff.Days;
+				
+				good->ActualPrice = good->GivenPrice;
+				if(days > 15)
+					good->ActualPrice -= good->ActualPrice * 5 / 100;
+				if (days > 30)
 				{
-					break;
+					good->ActualPrice -= good->GivenPrice * 10 / 100;
+					int bulgeDays = days - 30;
+
+					if (bulgeDays > 0)
+					{
+						if (bulgeDays > 60)
+							bulgeDays = 60;
+						good->ActualPrice -= good->GivenPrice * bulgeDays / 100;
+					}
 				}
+					
+
 				Goods->Enqueue(good);
 			}
+			din->Close();
 		}
-		fs.close();
+		catch (Exception^ e) {
+
+		}
+		finally
+		{
+			if (din != nullptr)
+				delete din;
+		}
 	}
 }
