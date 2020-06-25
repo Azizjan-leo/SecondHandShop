@@ -2,13 +2,10 @@
 #include "Form1.h"
 #include <string>
 #include <queue>
-#include <msclr\marshal_cppstd.h>
 #include <fstream>
-using namespace System::Runtime::Serialization::Formatters::Binary;
 using namespace System::IO;
 
 using namespace System;
-using namespace msclr::interop;
 
 
 namespace CppCLRWinformsProjekt {
